@@ -24,7 +24,7 @@ def check_keydown(event, settings, screen, tux, bullets):
     elif event.key == pygame.K_d:
         tux.moving_right = True
 
-def check_events(settings, screen, tux, bullets):
+def check_events(settings, screen, tux, bullets, angle):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
@@ -37,7 +37,7 @@ def check_events(settings, screen, tux, bullets):
         
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             # Fire a bullet
-            new_bullet = Bullet(settings, screen, tux)
+            new_bullet = Bullet(settings, screen, tux, angle)
             bullets.add(new_bullet)
 
 def update_screen(settings, screen, tux, bullets):

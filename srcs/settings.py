@@ -6,7 +6,7 @@ class Settings():
         self.bg_color = (255, 255, 255)
 
         #bullets
-        self.bullet_speed_factor = 2
+        self.bullet_speed_factor = 3
         self.bullet_width = 3
         self.bullet_height = 15
         self.bullet_color = (0 , 0, 0)
