@@ -12,7 +12,6 @@ class Bullet(Sprite):
         self.screen = screen
 
         self.rect = pygame.Rect(0, 0, settings.bullet_width, settings.bullet_height)
-        self.rect.centerx = tux.rect.centerx
         self.rect.top = tux.rect.top
         self.rect.bottom = tux.rect.bottom
         self.rect.left = tux.rect.left

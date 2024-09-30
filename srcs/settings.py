@@ -7,6 +7,6 @@ class Settings():
 
         #bullets
         self.bullet_speed_factor = 3
-        self.bullet_width = 3
+        self.bullet_width = 5
         self.bullet_height = 5
         self.bullet_color = (0 , 0, 0)

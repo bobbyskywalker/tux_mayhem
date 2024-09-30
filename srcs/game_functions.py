@@ -39,8 +39,8 @@ def check_events(settings, screen, tux, bullets, angle):
             # Fire a bullet
             new_bullet = Bullet(settings, screen, tux, angle)
             bullets.add(new_bullet)
-
-def update_screen(settings, screen, tux, bullets, crosshair):
+            
+def update_screen(settings, screen, tux, bullets, crosshair, hud):
     # Redraw the screen during each pass through the loop
     screen.fill(settings.bg_color)
 
@@ -48,5 +48,6 @@ def update_screen(settings, screen, tux, bullets, crosshair):
     for bullet in bullets.sprites():
         bullet.draw_bullet()
     tux.blitme()
+    hud.blit_HUD()
     # Make the most recently drawn screen visible
     pygame.display.flip()
