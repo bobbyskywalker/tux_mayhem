@@ -25,6 +25,7 @@ class Bullet(Sprite):
         self.color = settings.bullet_color
         self.speed_factor = settings.bullet_speed_factor
 
+
     def update(self):
         self.x += cos(self.angle) * self.speed_factor
         self.y -= sin(self.angle) * self.speed_factor

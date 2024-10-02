@@ -1,7 +1,7 @@
 import pygame
-
+from HUD import HUD
 class Tux():
-    def __init__(self, screen):
+    def __init__(self, screen, HUD, eq):
         self.screen = screen
         self.og_image = pygame.image.load("../graphics/tux.bmp")
         self.image = pygame.transform.scale(self.og_image, (60, 60))
@@ -12,10 +12,6 @@ class Tux():
         # hero cords
         self.rect.centerx = self.screen_rect.centerx
         self.rect.centery = self.screen_rect.centery
-        self.rect.bottom = self.screen_rect.bottom
-        self.rect.top = self.screen_rect.top
-        self.rect.right = self.screen_rect.right
-        self.rect.left = self.screen_rect.left
 
         # movement flags
         self.moving_up = False
@@ -23,9 +19,12 @@ class Tux():
         self.moving_left = False
         self.moving_right = False
 
+        self.hud = HUD
 
+        self.eq = eq
+        
     def update_pos(self):
-        if self.moving_up and self.rect.top > self.screen_rect.top:
+        if self.moving_up and self.rect.top > self.hud.gun_img.get_height():
             self.rect.centery -= 1
         if self.moving_down and self.rect.bottom < self.screen_rect.bottom:
             self.rect.centery += 1  
@@ -37,3 +36,15 @@ class Tux():
     def blitme(self):
         self.screen.blit(self.image, self.rect)
 
+    def gather_ammo(self):
+        if self.rect.colliderect(self.eq.ammo_rect) and not self.eq.ammo_gathered:
+            overlap_rect = self.rect.clip(self.eq.ammo_rect)
+
+            tux_mask = pygame.mask.from_surface(self.image)
+            ammo_mask = pygame.mask.from_surface(self.eq.ammo_icon)
+
+            offset = (overlap_rect.x - self.rect.x, overlap_rect.y - self.rect.y)
+            if tux_mask.overlap(ammo_mask, offset):
+                    self.eq.last_ammo = pygame.time.get_ticks()
+                    self.eq.ammo += 10
+                    self.eq.ammo_gathered = True

@@ -1,10 +1,10 @@
 import pygame
-
+from equipment import Equipment
 class HUD:
-    def __init__(self, settings, screen):
+    def __init__(self, settings, screen, equipment):
         self.screen = screen
         self.settings = settings
-
+        self.equipment = equipment
         self.gun_icon = pygame.image.load("../graphics/gun.bmp")
         self.health_icon = pygame.image.load("../graphics/health.bmp")
         self.score = 0
@@ -17,9 +17,14 @@ class HUD:
 
     def blit_HUD(self):
         # make up some clever way to print it
-        self.screen.blit(self.gun_img, (20, 20))
+        pygame.draw.rect(self.screen, (208, 236, 231), (0, 0, self.screen.get_width(), self.gun_img.get_height() + 5))
+        self.screen.blit(self.gun_img, (self.screen.get_width() - self.gun_img.get_width() * 2, 5))
         self.screen.blit(self.health_img, (self.screen.get_width() / 2 - self.health_img.get_width(), 5))
-        font = pygame.font.Font(None, 36)
-        text_surface = font.render('Ammo: 30', True, (0, 0, 0)) 
+        font = pygame.font.Font(None, self.health_img.get_height())
+        text_ammo = font.render('Ammo: ', True, (0, 0, 0)) 
+        ammo_val = font.render(str(self.equipment.ammo), True, (0, 0, 0))
+        text_health = font.render(': 100', True, (0, 0, 0))
         # print below the gun icon
-        self.screen.blit(text_surface, (10, 10))
+        self.screen.blit(text_ammo, (10, 10))
+        self.screen.blit(ammo_val, (text_ammo.get_width() + 10, 10))
+        self.screen.blit(text_health, ((self.screen.get_width() / 2 - self.health_img.get_width()) + self.health_img.get_width() + 10, 10))
