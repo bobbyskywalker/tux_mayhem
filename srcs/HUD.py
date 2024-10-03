@@ -23,8 +23,8 @@ class HUD:
         font = pygame.font.Font(None, self.health_img.get_height())
         text_ammo = font.render('Ammo: ', True, (0, 0, 0)) 
         ammo_val = font.render(str(self.equipment.ammo), True, (0, 0, 0))
-        text_health = font.render(': 100', True, (0, 0, 0))
+        health_val = font.render(': ' + str(self.equipment.health), True, (0, 0, 0))
         # print below the gun icon
         self.screen.blit(text_ammo, (10, 10))
         self.screen.blit(ammo_val, (text_ammo.get_width() + 10, 10))
-        self.screen.blit(text_health, ((self.screen.get_width() / 2 - self.health_img.get_width()) + self.health_img.get_width() + 10, 10))
+        self.screen.blit(health_val, ((self.screen.get_width() / 2 - self.health_img.get_width() + self.health_img.get_width() + 10), 10))

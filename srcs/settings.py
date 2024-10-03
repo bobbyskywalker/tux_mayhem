@@ -9,6 +9,7 @@ class Settings():
         self.bg_img = pygame.transform.scale(self.bg, (self.screen_width, self.screen_height))
         self.bg_color = (255, 255, 255)
 
+        self.tux_speed_factor = 2
         #bullets
         self.bullet_speed_factor = 3
         self.bullet_width = 5

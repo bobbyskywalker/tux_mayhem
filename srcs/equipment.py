@@ -4,7 +4,7 @@ class Equipment():
     def __init__(self, screen):
         self.screen = screen
         self.ammo = 5
-        self.health = 0
+        self.health = 100
         self.current_weapon = 'GUN'
         self.ammo_gathered = False
         self.ammo_icon_og = pygame.image.load("../graphics/ammo.bmp")
@@ -20,7 +20,6 @@ class Equipment():
 
     def drop_ammo(self):
         self.ammo -= 1
-
     def spawn_ammo(self, cords):
         coords = (cords[0], cords[1])
         self.ammo_rect.topleft = coords

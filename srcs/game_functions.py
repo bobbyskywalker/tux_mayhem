@@ -45,7 +45,7 @@ def check_events(settings, screen, tux, bullets, angle, eq):
                 bullets.add(new_bullet)
                 eq.drop_ammo()
             
-def update_screen(settings, screen, tux, bullets, crosshair, hud, eq):
+def update_screen(settings, screen, tux, bullets, crosshair, hud, eq, virus):
     # Redraw the screen during each pass through the loop
     current_time = pygame.time.get_ticks()
     screen.blit(settings.bg_img, (0, 0))
@@ -62,6 +62,8 @@ def update_screen(settings, screen, tux, bullets, crosshair, hud, eq):
     if current_time - eq.last_ammo > eq.ammo_spawn_delay:
         screen.blit(eq.ammo_icon, eq.spawn_ammo(cords))
     tux.blitme()
+    virus.pursue_player()
+    virus.blit_foe()
 
     # Make the most recently drawn screen visible
     pygame.display.flip()
