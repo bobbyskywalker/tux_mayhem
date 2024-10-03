@@ -8,7 +8,7 @@ import math
 # health bar down below- 3 hits
 # if health == 0, delete from the group
 class Virus_foe():
-    def __init__(self, screen, tux):
+    def __init__(self, screen, tux, bullets):
         self.screen = screen
 
         self.og_image = pygame.image.load("../graphics/viurs.bmp")
@@ -18,6 +18,7 @@ class Virus_foe():
         self.speed = 1
 
         self.tux = tux
+        self.bullets = bullets
 
         self.health = 100
 
@@ -32,12 +33,11 @@ class Virus_foe():
         self.rect.centerx += dx * self.speed
         self.rect.centery += dy  * self.speed
 
-
-    # def pursue_player(self):
-    #     # Find direction vector (dx, dy) between enemy and self.tux.
-    #     dirvect = pygame.math.Vector2(self.tux.rect.x - self.rect.x,
-    #                                     self.tux.rect.y - self.rect.y)
-    #     dirvect.normalize()
-    #     # Move along this normalized vector towards the self.tux at current speed.
-    #     dirvect.scale_to_length(self.speed)
-    #     self.rect.move_ip
+    # def delete_enemy(self):
+    def take_damage(self):
+        for bullet in self.bullets.sprites():
+            if self.rect.colliderect(bullet.rect):
+                    self.health -= 20
+                    self.bullets.remove(bullet)
+        
+                    

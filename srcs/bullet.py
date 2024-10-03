@@ -2,9 +2,6 @@ import pygame
 from pygame.sprite import Sprite
 from math import *
 
-#TODO: make bullets fire according to crosshair
-# and ofc add crosshair :pp
-# one bullet allowed
 class Bullet(Sprite):
     def __init__(self, settings, screen, tux, angle):
         super().__init__()
@@ -24,7 +21,6 @@ class Bullet(Sprite):
 
         self.color = settings.bullet_color
         self.speed_factor = settings.bullet_speed_factor
-
 
     def update(self):
         self.x += cos(self.angle) * self.speed_factor

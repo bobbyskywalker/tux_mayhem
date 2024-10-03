@@ -25,17 +25,16 @@ def run_game():
     eq = Equipment(screen)
     hud = HUD(game_settings, screen, eq)
     tux = Tux(screen, hud, eq, game_settings)
-    enemies = Virus_foe(screen, tux)
+    virus = Virus_foe(screen, tux, bullets)
     
 
     while True:
         pygame.mouse.set_visible(False)    
         #check for events and update screen
-        gf.update_screen(game_settings, screen, tux, bullets, crosshair, hud, eq, enemies)
+        gf.update_screen(game_settings, screen, tux, bullets, crosshair, hud, eq, virus)
         angle = sm.get_angle_between((tux.rect.centerx, tux.rect.centery), crosshair.cursor_img_rect)
-        gf.check_events(game_settings, screen, tux, bullets, angle, eq)        
+        gf.check_events(game_settings, screen, tux, bullets, angle, eq, virus)        
         tux.update_pos()
         bullets.update()
-        
         delete_bullets(bullets)
 run_game()

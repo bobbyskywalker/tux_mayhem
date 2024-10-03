@@ -6,6 +6,7 @@ from bullet import Bullet
 
 from equipment import Equipment as eq
 from random import randint
+from enemies import Virus_foe
 
 def check_keyup(event, tux):
     if event.key == pygame.K_w:
@@ -27,7 +28,7 @@ def check_keydown(event, settings, screen, tux, bullets):
     elif event.key == pygame.K_d:
         tux.moving_right = True
 
-def check_events(settings, screen, tux, bullets, angle, eq):
+def check_events(settings, screen, tux, bullets, angle, eq, virus):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
@@ -61,9 +62,12 @@ def update_screen(settings, screen, tux, bullets, crosshair, hud, eq, virus):
     cords = (eq.ammo_spotx, eq.ammo_spoty)
     if current_time - eq.last_ammo > eq.ammo_spawn_delay:
         screen.blit(eq.ammo_icon, eq.spawn_ammo(cords))
+    if isinstance(virus, Virus_foe):
+        virus.take_damage()
     tux.blitme()
     virus.pursue_player()
-    virus.blit_foe()
+    if (virus.health > 0):
+        virus.blit_foe()
 
     # Make the most recently drawn screen visible
     pygame.display.flip()
