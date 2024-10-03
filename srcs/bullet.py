@@ -31,7 +31,6 @@ class Bullet(Sprite):
     def draw_bullet(self):
         pygame.draw.rect(self.screen, self.color, self.rect)
 
-
 def delete_bullets(bullets):
     for bullet in bullets.copy():
         if (bullet.rect.top) <= 0:

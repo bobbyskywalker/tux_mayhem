@@ -10,7 +10,6 @@ class HUD:
         self.score = 0
         self.gun_img = pygame.transform.scale(self.gun_icon, (60, 40))
         self.health_img = pygame.transform.scale(self.health_icon, (30, 30))
-
         self.health_count = 0
         self.gun_count = 0
 
