@@ -3,14 +3,14 @@ import math
 from random import randint
 from pygame.sprite import Sprite
 
-class Virus_foe(Sprite):
+
+class Enemy(Sprite):
     def __init__(self, screen, tux, bullets, eq):
         super().__init__()
         self.screen = screen
 
-        self.og_image = pygame.image.load("../graphics/viurs.bmp")
-        self.image = pygame.transform.scale(self.og_image, (100, 50))
-        self.rect = self.image.get_rect()
+        self.image = None
+        self.rect = None
 
         self.speed = 1
 
@@ -38,7 +38,6 @@ class Virus_foe(Sprite):
             self.rect.centerx += dx * self.speed
             self.rect.centery += dy  * self.speed
 
-    # def delete_enemy(self):
     def take_damage(self):
         for bullet in self.bullets.sprites():
             if self.rect.colliderect(bullet.rect):
@@ -50,10 +49,90 @@ class Virus_foe(Sprite):
         if self.rect.colliderect(self.tux.rect):
             self.eq.health -= 5
             self.last_hit = current_time
-        
-def spawn_foes(viruses, screen, tux, bullets, eq):
-    for _ in range(5):
+
+class Skull_foe(Enemy):
+    def __init__(self, screen, tux, bullets, eq):
+        super().__init__(screen, tux, bullets, eq)
+        self.og_image = pygame.image.load("../graphics/skull.bmp")
+        self.image = pygame.transform.scale(self.og_image, (50, 50))
+        self.rect = self.image.get_rect()
+        self.speed = 2
+        self.health = 40
+        self.hit_delay = 2000
+        self.last_hit = 0
+
+class Virus_foe(Enemy):
+    def __init__(self, screen, tux, bullets, eq):
+        super().__init__(screen, tux, bullets, eq)
+        self.og_image = pygame.image.load("../graphics/viurs.bmp")
+        self.image = pygame.transform.scale(self.og_image, (100, 50))
+        self.rect = self.image.get_rect()
+        self.speed = 1
+        self.health = 100
+        self.hit_delay = 2000
+        self.last_hit = 0
+
+class Demon_foe(Enemy):
+    def __init__(self, screen, tux, bullets, eq):
+        super().__init__(screen, tux, bullets, eq)
+        self.og_image = pygame.image.load("../graphics/demon.bmp")
+        self.image = pygame.transform.scale(self.og_image, (100, 50))
+        self.rect = self.image.get_rect()
+        self.speed = 1
+        self.health = 100
+        self.hit_delay = 2000
+        self.last_hit = 0
+def spawn_foes(viruses, skulls, demons, screen, tux, bullets, eq, hud):
+    match hud.wave:
+        case 1:
+            num_virus = 3
+            num_skull = 0
+            num_demons = 0
+        case 2:
+            num_virus = 6
+            num_skull = 0
+            num_demons = 0
+        case 3:
+            num_virus = 0
+            num_skull = 3
+            num_demons = 0
+        case 4:
+            num_virus = 3
+            num_skull = 3
+            num_demons = 0
+        case 5:
+            num_virus = 2
+            num_skull = 2
+            num_demons = 2
+        case 6:
+            num_virus = 0
+            num_skull = 4
+            num_demons = 4
+        case 7:
+            num_virus = 3
+            num_skull = 3
+            num_demons = 3
+        case 8:
+            num_virus = 4
+            num_skull = 4
+            num_demons = 4
+        case 9:
+            num_virus = 5
+            num_skull = 5
+            num_demons = 5
+
+    for _ in range(num_virus):
         virus = Virus_foe(screen, tux, bullets, eq)
         virus.rect.x = randint(0, screen.get_width() - virus.rect.width)
         virus.rect.y = randint(0, screen.get_height() - virus.rect.height)
         viruses.add(virus)
+    for _ in range(num_skull):
+        skull = Skull_foe(screen, tux, bullets, eq)
+        skull.rect.x = randint(0, screen.get_width() - skull.rect.width)
+        skull.rect.y = randint(0, screen.get_height() - skull.rect.height)
+        skulls.add(skull)
+    for _ in range(num_demons):
+        demon = Demon_foe(screen, tux, bullets, eq)
+        demon.rect.x = randint(0, screen.get_width() - demon.rect.width)
+        demon.rect.y = randint(0, screen.get_height() - demon.rect.height)
+        demons.add(demon)

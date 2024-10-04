@@ -14,7 +14,7 @@ from enemies import *
 # TODO: spawn enemies accordingly to the current wave
 # TODO: after wave shop
 # TODO: currency system
-# TODO: scoreboard and score file savings
+# TODO: score file savings
 # TODO: weapon image and bullets firing from the weapon
 # TODO: automatic weapon
 # TODO: more enemies and more generic foe class, which is being inherited by other foes
@@ -37,12 +37,16 @@ def run_game():
 
     # TODO: make them spawn accordingly to the current wave
     viruses = pygame.sprite.Group()
-    spawn_foes(viruses, screen, tux, bullets, eq)
-    
+    skulls = pygame.sprite.Group()
+    demons = pygame.sprite.Group()
+    spawn_foes(viruses, skulls, demons, screen, tux, bullets, eq, hud)
     while True:
         pygame.mouse.set_visible(False)    
         #check for events and update screen
-        gf.update_screen(game_settings, screen, tux, bullets, crosshair, hud, eq, viruses)
+        gf.update_screen(game_settings, screen, tux, bullets, crosshair, hud, eq, viruses, skulls, demons)
+        if not any(viruses) and not any(skulls) and not any(demons):
+            hud.wave += 1
+            spawn_foes(viruses, skulls, demons, screen, tux, bullets, eq, hud)
         angle = sm.get_angle_between((tux.rect.centerx, tux.rect.centery), crosshair.cursor_img_rect)
         gf.check_events(game_settings, screen, tux, bullets, angle, eq, viruses)        
         tux.update_pos()

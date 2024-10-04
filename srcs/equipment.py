@@ -3,7 +3,7 @@ from random import randint
 class Equipment():
     def __init__(self, screen):
         self.screen = screen
-        self.ammo = 5
+        self.ammo = 50
         self.health = 100
         self.current_weapon = 'GUN'
         self.ammo_gathered = False
