@@ -2,8 +2,9 @@ import pygame
 import math
 from random import randint
 from pygame.sprite import Sprite
+from bullet import Demon_Bullet
 
-
+# generic motherclass
 class Enemy(Sprite):
     def __init__(self, screen, tux, bullets, eq):
         super().__init__()
@@ -73,21 +74,30 @@ class Virus_foe(Enemy):
         self.last_hit = 0
 
 class Demon_foe(Enemy):
-    def __init__(self, screen, tux, bullets, eq):
+    def __init__(self, screen, tux, bullets, eq, settings):
         super().__init__(screen, tux, bullets, eq)
         self.og_image = pygame.image.load("../graphics/demon.bmp")
         self.image = pygame.transform.scale(self.og_image, (100, 50))
         self.rect = self.image.get_rect()
         self.speed = 1
-        self.health = 100
+        self.health = 200
         self.hit_delay = 2000
+        self.shoot_delay = 500
+        self.last_shot = 0
         self.last_hit = 0
-def spawn_foes(viruses, skulls, demons, screen, tux, bullets, eq, hud):
+        self.settings = settings
+        self.demon_bullets = pygame.sprite.Group()
+
+    def shoot(self):
+        bullet = Demon_Bullet(self.settings, self.screen, self.tux, self)
+        self.demon_bullets.add(bullet)
+
+def spawn_foes(viruses, skulls, demons, screen, tux, bullets, eq, hud, settings):
     match hud.wave:
         case 1:
-            num_virus = 3
-            num_skull = 0
-            num_demons = 0
+            num_virus = 0
+            num_skull = 2
+            num_demons = 1
         case 2:
             num_virus = 6
             num_skull = 0
@@ -132,7 +142,7 @@ def spawn_foes(viruses, skulls, demons, screen, tux, bullets, eq, hud):
         skull.rect.y = randint(0, screen.get_height() - skull.rect.height)
         skulls.add(skull)
     for _ in range(num_demons):
-        demon = Demon_foe(screen, tux, bullets, eq)
+        demon = Demon_foe(screen, tux, bullets, eq, settings)
         demon.rect.x = randint(0, screen.get_width() - demon.rect.width)
         demon.rect.y = randint(0, screen.get_height() - demon.rect.height)
         demons.add(demon)

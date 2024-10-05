@@ -1,7 +1,7 @@
 import sys
 import pygame
 from tux import Tux
-from bullet import Bullet
+from bullet import Bullet, delete_bullets
 from equipment import Equipment as eq
 from random import randint
 from enemies import *
@@ -44,6 +44,7 @@ def check_events(settings, screen, tux, bullets, angle, eq, virus):
                 eq.drop_ammo()
 
 def update_foes(viruses, skulls, demons, hud, current_time):
+    # update viruses
     for virus in viruses.sprites():
         virus.take_damage()
         if current_time - virus.last_hit > virus.hit_delay:
@@ -55,6 +56,7 @@ def update_foes(viruses, skulls, demons, hud, current_time):
             hud.score += 100
             virus.remove(viruses)
 
+    # update skulls
     for skull in skulls.sprites():
         skull.take_damage()
         if current_time - skull.last_hit > skull.hit_delay:
@@ -66,8 +68,13 @@ def update_foes(viruses, skulls, demons, hud, current_time):
             hud.score += 200
             skull.remove(skulls)
 
+    # update demons
     for demon in demons.sprites():
         demon.take_damage()
+        # shooting mechanic update
+        if current_time - demon.last_shot > demon.shoot_delay:
+            demon.shoot()
+            demon.last_shot = pygame.time.get_ticks()
         if current_time - demon.last_hit > demon.hit_delay:
             demon.give_damage()
         demon.pursue_player()
@@ -76,9 +83,18 @@ def update_foes(viruses, skulls, demons, hud, current_time):
         else:
             hud.score += 500
             demon.remove(demons)
+        
+        for bullet in demon.demon_bullets:
+            bullet.draw_bullet()
+            bullet.update()
+        delete_bullets(demon.demon_bullets, hud)
+        
+
 def update_screen(settings, screen, tux, bullets, crosshair, hud, eq, viruses, skulls, demons):
     current_time = pygame.time.get_ticks()
     screen.blit(settings.bg_img, (0, 0))
+
+    # crosshair update
     crosshair.update_cursor()
     # bullets update
     for bullet in bullets.sprites():
@@ -113,5 +129,5 @@ def game_over(screen):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
-            if event.type == pygame.KEYDOWN:
+            elif event.type == pygame.KEYDOWN:
                 sys.exit()  

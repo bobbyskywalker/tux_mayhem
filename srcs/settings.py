@@ -15,3 +15,8 @@ class Settings():
         self.bullet_width = 5
         self.bullet_height = 5
         self.bullet_color = (0, 0, 0)
+
+        self.demon_bullet_speed_factor = 2
+        self.demon_bullet_width = 8
+        self.demon_bullet_height = 8
+        self.demon_bullet_color = (255, 0, 0)
