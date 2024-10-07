@@ -98,6 +98,15 @@ class Demon_foe(Enemy):
                 self.eq.health -= 5
                 self.demon_bullets.remove(bullet)
 
+class Boss_foe(Enemy):
+    def __init__(self, screen, tux, bullets, eq, settings):
+        super().__init__(screen, tux, bullets, eq)
+        self.og_image = pygame.image.load("../graphics/bear_boss.bmp")
+        self.image = pygame.transform.scale(self.og_image, (100, 50))
+        self.rect = self.image.get_rect()
+        self.speed = 1
+
+
 def spawn_foes(viruses, skulls, demons, screen, tux, bullets, eq, hud, settings):
     match hud.wave:
         case 1:

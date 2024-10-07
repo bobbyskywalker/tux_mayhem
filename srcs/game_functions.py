@@ -27,6 +27,7 @@ def check_keydown(event, settings, screen, tux, bullets):
         tux.moving_right = True
 
 def check_events(settings, screen, tux, bullets, angle, eq, virus):
+    current_time = pygame.time.get_ticks()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
@@ -37,11 +38,16 @@ def check_events(settings, screen, tux, bullets, angle, eq, virus):
         if event.type == pygame.KEYUP:
             check_keyup(event, tux)
         
-        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and eq.current_weapon == 'GUN':
             if eq.ammo > 0:
                 new_bullet = Bullet(settings, screen, tux, angle)
                 bullets.add(new_bullet)
                 eq.drop_ammo()
+        if pygame.mouse.get_pressed()[0] and eq.ammo > 0 and eq.current_weapon == 'RIFLE' and current_time - eq.last_bullet > eq.rifle_fire_rate:
+            eq.last_bullet = pygame.time.get_ticks()
+            new_bullet = Bullet(settings, screen, tux, angle)
+            bullets.add(new_bullet)
+            eq.drop_ammo()
 
 def update_foes(viruses, skulls, demons, hud, current_time):
     # update viruses
@@ -108,7 +114,7 @@ def update_screen(settings, screen, tux, bullets, crosshair, hud, eq, viruses, s
     # ammo update
     if eq.ammo_gathered == True:
         eq.ammo_spotx = randint(eq.ammo_icon.get_width(), screen.get_width() - eq.ammo_icon.get_width())
-        eq.ammo_spoty = randint(10 + hud.gun_img.get_height(), screen.get_height() - eq.ammo_icon.get_height())
+        eq.ammo_spoty = randint(20 + hud.gun_img.get_height(), screen.get_height() - eq.ammo_icon.get_height())
     cords = (eq.ammo_spotx, eq.ammo_spoty)
     if current_time - eq.last_ammo > eq.ammo_spawn_delay:
         screen.blit(eq.ammo_icon, eq.spawn_ammo(cords))

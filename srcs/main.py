@@ -44,17 +44,18 @@ def run_game():
 
     while True:
         pygame.mouse.set_visible(False)    
-        #check for events and update screen
+        
         gf.update_screen(game_settings, screen, tux, bullets, crosshair, hud, eq, viruses, skulls, demons)
 
-        # new wave
+        # new wave, shop available every two waves
         if not any(viruses) and not any(skulls) and not any(demons):
             if hud.wave % 2 == 0:
                 shop.active = True
-                while(shop.active == True):
+                while (shop.active == True):
                     shop.buy_items()
             hud.wave += 1
             gf.reset_tux_pos(tux)
+            bullets.empty()
             gf.update_screen(game_settings, screen, tux, bullets, crosshair, hud, eq, viruses, skulls, demons)
             gf.print_wave_info(screen, hud)
             time.sleep(3)

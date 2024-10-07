@@ -1,5 +1,5 @@
 import pygame
-
+import sys
 class Shop():
     def __init__(self, screen, hud, eq, tux):
         self.tux = tux
@@ -63,7 +63,7 @@ class Shop():
                         if self.hud.score >= 3000:
                             purchased_items[2] = True
                             self.hud.score -= 3000
-                            self.eq.current_gun = 'RIFLE'
+                            self.eq.current_weapon = 'RIFLE'
                     elif event.key == pygame.K_q:
                         self.active = False
                 self.hud.blit_HUD()

@@ -18,6 +18,9 @@ class Equipment():
         self.ammo_spawn_delay = 5000
         self.last_ammo = -1000000
 
+        self.last_bullet = 0
+        self.rifle_fire_rate = 100
+
     def drop_ammo(self):
         self.ammo -= 1
     def spawn_ammo(self, cords):

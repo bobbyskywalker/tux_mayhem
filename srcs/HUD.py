@@ -6,8 +6,10 @@ class HUD:
         self.settings = settings
         self.equipment = equipment
         self.gun_icon = pygame.image.load("../graphics/gun.bmp")
+        self.rifle_icon = pygame.image.load("../graphics/rifle.bmp")
         self.health_icon = pygame.image.load("../graphics/health.bmp")
         self.score = 0
+        self.rifle_img = pygame.transform.scale(self.rifle_icon, (100, 40))
         self.gun_img = pygame.transform.scale(self.gun_icon, (60, 40))
         self.health_img = pygame.transform.scale(self.health_icon, (30, 30))
         self.health_count = 0
@@ -15,12 +17,16 @@ class HUD:
 
         self.wave = 1
 
-        self.score = 0
+        self.score = 1000000
 
     def blit_HUD(self):
         # make up some clever way to print it
         pygame.draw.rect(self.screen, (208, 236, 231), (0, 0, self.screen.get_width(), self.gun_img.get_height() + 5))
-        self.screen.blit(self.gun_img, (self.screen.get_width() - self.gun_img.get_width() * 2, 5))
+        if self.equipment.current_weapon == 'GUN':
+            self.screen.blit(self.gun_img, (self.screen.get_width() - self.gun_img.get_width() * 2, 5))
+        else:
+            self.screen.blit(self.rifle_img, (self.screen.get_width() - self.gun_img.get_width() * 2, 5))
+
         self.screen.blit(self.health_img, (self.screen.get_width() / 2 - self.health_img.get_width(), 5))
         font = pygame.font.Font(None, self.health_img.get_height())
         text_ammo = font.render('Ammo: ' + str(self.equipment.ammo), True, (0, 0, 0)) 
