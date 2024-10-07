@@ -71,6 +71,7 @@ def update_foes(viruses, skulls, demons, hud, current_time):
     # update demons
     for demon in demons.sprites():
         demon.take_damage()
+        demon.take_bullet_damage()
         # shooting mechanic update
         if current_time - demon.last_shot > demon.shoot_delay:
             demon.shoot()

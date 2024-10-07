@@ -14,10 +14,9 @@ class Equipment():
         self.ammo_spotx = randint(0, screen.get_width())
         self.ammo_spoty = randint(0, screen.get_height())
 
-        #last ammo- time since the last gather
+        # last ammo- time since the last gather
         self.ammo_spawn_delay = 5000
         self.last_ammo = -1000000
-
     def drop_ammo(self):
         self.ammo -= 1
     def spawn_ammo(self, cords):

@@ -37,10 +37,12 @@ def run_game():
     viruses = pygame.sprite.Group()
     skulls = pygame.sprite.Group()
     demons = pygame.sprite.Group()
+
     spawn_foes(viruses, skulls, demons, screen, tux, bullets, eq, hud, game_settings)
+
     while True:
         pygame.mouse.set_visible(False)    
-        #check for events and update screen
+        # check for events and update screen
         gf.update_screen(game_settings, screen, tux, bullets, crosshair, hud, eq, viruses, skulls, demons)
         if not any(viruses) and not any(skulls) and not any(demons):
             hud.wave += 1
