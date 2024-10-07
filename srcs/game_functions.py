@@ -132,3 +132,13 @@ def game_over(screen):
                 sys.exit()
             elif event.type == pygame.KEYDOWN:
                 sys.exit()  
+
+def print_wave_info(screen, hud):
+    font = pygame.font.Font(None, 30)
+    wave_info = font.render('Wave ' + str(hud.wave), True, (0, 0, 0))
+    screen.blit(wave_info, (screen.get_width() / 2 - wave_info.get_width() / 2, screen.get_height() / 2 - 100))
+    pygame.display.flip()
+
+def reset_tux_pos(tux):
+    tux.rect.centerx = tux.screen_rect.centerx
+    tux.rect.centery = tux.screen_rect.centery

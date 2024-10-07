@@ -25,4 +25,4 @@ class Equipment():
         self.ammo_rect.topleft = coords
         self.ammo_gathered = False
         return coords
-
+                    
