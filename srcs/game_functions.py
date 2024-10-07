@@ -5,6 +5,7 @@ from bullet import Bullet, delete_bullets
 from equipment import Equipment as eq
 from random import randint
 from enemies import *
+import scores as scr
 
 def check_keyup(event, tux):
     if event.key == pygame.K_w:
@@ -49,7 +50,7 @@ def check_events(settings, screen, tux, bullets, angle, eq, virus):
             bullets.add(new_bullet)
             eq.drop_ammo()
 
-def update_foes(viruses, skulls, demons, hud, current_time):
+def update_foes(viruses, skulls, demons, hud, current_time, boss):
     # update viruses
     for virus in viruses.sprites():
         virus.take_damage()
@@ -96,8 +97,31 @@ def update_foes(viruses, skulls, demons, hud, current_time):
             bullet.update()
         delete_bullets(demon.demon_bullets, hud)
         
+    if hud.wave == 10 and boss.health > 0:
+        boss.alive = True
+        boss.take_damage()
+        boss.take_bullet_damage()
+        if current_time - boss.last_shot > boss.shoot_delay:
+            boss.shoot()
+            boss.last_shot = pygame.time.get_ticks()
+        if current_time - boss.last_hit > boss.hit_delay:
+            boss.give_damage()
+        boss.pursue_player()
+        if boss.health > 0:
+            boss.blit_foe()
+        else:
+            boss.alive = False
+            boss.killed = True
+            if boss.killed == True:
+                hud.score += 10000
+                boss_killed = False
+        for bullet in boss.demon_bullets:
+            bullet.draw_bullet()
+            bullet.update()
+        delete_bullets(boss.demon_bullets, hud)
 
-def update_screen(settings, screen, tux, bullets, crosshair, hud, eq, viruses, skulls, demons):
+
+def update_screen(settings, screen, tux, bullets, crosshair, hud, eq, viruses, skulls, demons, boss):
     current_time = pygame.time.get_ticks()
     screen.blit(settings.bg_img, (0, 0))
 
@@ -120,7 +144,7 @@ def update_screen(settings, screen, tux, bullets, crosshair, hud, eq, viruses, s
         screen.blit(eq.ammo_icon, eq.spawn_ammo(cords))
 
     # foe update
-    update_foes(viruses, skulls, demons, hud, current_time)
+    update_foes(viruses, skulls, demons, hud, current_time, boss)
 
     pygame.display.flip()
 
@@ -148,3 +172,26 @@ def print_wave_info(screen, hud):
 def reset_tux_pos(tux):
     tux.rect.centerx = tux.screen_rect.centerx
     tux.rect.centery = tux.screen_rect.centery
+
+
+def game_won(screen, hud):
+    font = pygame.font.Font(None, 100)
+    game_over = font.render('YOU WON', True, (255, 255, 255))
+    font = pygame.font.Font(None, 30)
+    score = font.render('Score: ' + str(hud.score), True, (255, 255, 255))
+    save_score = font.render('Save? y/n', True, (255, 255, 255))
+    screen.fill((0, 76, 153))
+    screen.blit(game_over, (screen.get_width() / 2 - game_over.get_width() / 2, screen.get_height() / 2 - game_over.get_height() / 2))
+    screen.blit(score, (screen.get_width() / 2 - score.get_width() / 2, screen.get_height() / 2 + game_over.get_height() / 2 + 10))
+    screen.blit(save_score, (screen.get_width() / 2 - save_score.get_width() / 2, screen.get_height() / 2 + game_over.get_height() / 2 + 50))
+    pygame.display.flip()
+    while 1:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_y:
+                    scr.save_score(hud.score, screen)
+                    return True
+                elif event.key == pygame.K_n:
+                    return False

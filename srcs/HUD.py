@@ -17,7 +17,7 @@ class HUD:
 
         self.wave = 1
 
-        self.score = 1000000
+        self.score = 0
 
     def blit_HUD(self):
         # make up some clever way to print it

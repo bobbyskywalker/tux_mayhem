@@ -12,13 +12,9 @@ from shop import Shop
 from enemies import *
 import time
 
-# TODO: automatic weapon
 # TODO: enemies not colliding with each other would be nice
-# TODO: ammo spawn fix lol
 # TODO: enemies not spawning on tux
-# TODO: score file savings
-# TODO: main menu
-# TODO: wave 10 boss fight
+# TODO: main menu with high score display
 def run_game():
     pygame.init()
 
@@ -34,32 +30,35 @@ def run_game():
     viruses = pygame.sprite.Group()
     skulls = pygame.sprite.Group()
     demons = pygame.sprite.Group()
+    boss = Boss_foe(screen, tux, bullets, eq, game_settings)
     shop = Shop(screen, hud, eq, tux)
 
     # first init
-    gf.update_screen(game_settings, screen, tux, bullets, crosshair, hud, eq, viruses, skulls, demons)
+    gf.update_screen(game_settings, screen, tux, bullets, crosshair, hud, eq, viruses, skulls, demons, boss)
     gf.print_wave_info(screen, hud)
     time.sleep(3)
-    spawn_foes(viruses, skulls, demons, screen, tux, bullets, eq, hud, game_settings)
+    spawn_foes(viruses, skulls, demons, screen, tux, bullets, eq, hud, game_settings, boss)
 
-    while True:
+    while 1:
         pygame.mouse.set_visible(False)    
         
-        gf.update_screen(game_settings, screen, tux, bullets, crosshair, hud, eq, viruses, skulls, demons)
+        gf.update_screen(game_settings, screen, tux, bullets, crosshair, hud, eq, viruses, skulls, demons, boss)
 
         # new wave, shop available every two waves
-        if not any(viruses) and not any(skulls) and not any(demons):
-            if hud.wave % 2 == 0:
+        if not any(viruses) and not any(skulls) and not any(demons) and boss.alive == False:
+            if hud.wave % 2 == 0 and hud.wave != 10:
                 shop.active = True
                 while (shop.active == True):
                     shop.buy_items()
             hud.wave += 1
+            if hud.wave == 11:
+                break
             gf.reset_tux_pos(tux)
             bullets.empty()
-            gf.update_screen(game_settings, screen, tux, bullets, crosshair, hud, eq, viruses, skulls, demons)
+            gf.update_screen(game_settings, screen, tux, bullets, crosshair, hud, eq, viruses, skulls, demons, boss)
             gf.print_wave_info(screen, hud)
             time.sleep(3)
-            spawn_foes(viruses, skulls, demons, screen, tux, bullets, eq, hud, game_settings)
+            spawn_foes(viruses, skulls, demons, screen, tux, bullets, eq, hud, game_settings, boss)
 
         angle = sm.get_angle_between((tux.rect.centerx, tux.rect.centery), crosshair.cursor_img_rect)
         gf.check_events(game_settings, screen, tux, bullets, angle, eq, viruses)        
@@ -68,5 +67,6 @@ def run_game():
         delete_bullets(bullets, hud)
         if eq.health <= 0:
             gf.game_over(screen)
-            break      
+            break
+    gf.game_won(screen, hud)
 run_game()
