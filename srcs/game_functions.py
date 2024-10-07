@@ -71,7 +71,8 @@ def update_foes(viruses, skulls, demons, hud, current_time):
     # update demons
     for demon in demons.sprites():
         demon.take_damage()
-        # shooting mechanic update
+        demon.take_bullet_damage()
+    # shooting mechanic update
         if current_time - demon.last_shot > demon.shoot_delay:
             demon.shoot()
             demon.last_shot = pygame.time.get_ticks()
@@ -99,12 +100,12 @@ def update_screen(settings, screen, tux, bullets, crosshair, hud, eq, viruses, s
     # bullets update
     for bullet in bullets.sprites():
         bullet.draw_bullet()
-    #tux update
+    # tux update
     tux.gather_ammo()
     tux.blitme()
     # hud update
     hud.blit_HUD()
-    #ammo update
+    # ammo update
     if eq.ammo_gathered == True:
         eq.ammo_spotx = randint(eq.ammo_icon.get_width(), screen.get_width() - eq.ammo_icon.get_width())
         eq.ammo_spoty = randint(10 + hud.gun_img.get_height(), screen.get_height() - eq.ammo_icon.get_height())
@@ -112,7 +113,7 @@ def update_screen(settings, screen, tux, bullets, crosshair, hud, eq, viruses, s
     if current_time - eq.last_ammo > eq.ammo_spawn_delay:
         screen.blit(eq.ammo_icon, eq.spawn_ammo(cords))
 
-    #foe update
+    # foe update
     update_foes(viruses, skulls, demons, hud, current_time)
 
     pygame.display.flip()

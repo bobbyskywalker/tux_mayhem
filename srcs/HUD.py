@@ -17,7 +17,6 @@ class HUD:
 
         self.score = 0
 
-
     def blit_HUD(self):
         # make up some clever way to print it
         pygame.draw.rect(self.screen, (208, 236, 231), (0, 0, self.screen.get_width(), self.gun_img.get_height() + 5))
@@ -32,5 +31,3 @@ class HUD:
         self.screen.blit(text_score, (self.screen.get_width() / 4 - text_score.get_width(), 10))
         self.screen.blit(wave_val, (self.screen.get_width() / 2 + self.screen.get_width() / 4 - wave_val.get_width(), 10))
         self.screen.blit(health_val, ((self.screen.get_width() / 2 - self.health_img.get_width() + self.health_img.get_width() + 10), 10))
-
-    # def wave_update

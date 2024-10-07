@@ -37,6 +37,7 @@ def run_game():
     viruses = pygame.sprite.Group()
     skulls = pygame.sprite.Group()
     demons = pygame.sprite.Group()
+    
     spawn_foes(viruses, skulls, demons, screen, tux, bullets, eq, hud, game_settings)
     while True:
         pygame.mouse.set_visible(False)    

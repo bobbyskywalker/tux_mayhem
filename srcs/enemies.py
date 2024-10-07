@@ -92,39 +92,45 @@ class Demon_foe(Enemy):
         bullet = Demon_Bullet(self.settings, self.screen, self.tux, self)
         self.demon_bullets.add(bullet)
 
+    def take_bullet_damage(self):
+        for bullet in self.demon_bullets.sprites():
+            if bullet.rect.colliderect(self.tux.rect):
+                self.eq.health -= 5
+                self.demon_bullets.remove(bullet)
+
 def spawn_foes(viruses, skulls, demons, screen, tux, bullets, eq, hud, settings):
     match hud.wave:
         case 1:
             num_virus = 0
-            num_skull = 2
+            num_skull = 0
             num_demons = 1
         case 2:
-            num_virus = 6
-            num_skull = 0
+            num_virus = 0
+            num_skull = 2
             num_demons = 0
         case 3:
-            num_virus = 0
-            num_skull = 3
-            num_demons = 0
-        case 4:
             num_virus = 3
             num_skull = 3
             num_demons = 0
+        case 4:
+            num_virus = 0
+            num_skull = 0
+            num_demons = 3
         case 5:
             num_virus = 2
             num_skull = 2
             num_demons = 2
         case 6:
-            num_virus = 0
-            num_skull = 4
-            num_demons = 4
-        case 7:
             num_virus = 3
             num_skull = 3
             num_demons = 3
+        case 7:
+            num_virus = 5
+            num_skull = 2
+            num_demons = 3
         case 8:
-            num_virus = 4
-            num_skull = 4
+            num_virus = 3
+            num_skull = 5
             num_demons = 4
         case 9:
             num_virus = 5
