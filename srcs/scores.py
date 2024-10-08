@@ -1,7 +1,7 @@
 import pygame
 import sys
 import time
-
+import os
 def input_box(screen):
     user_text = ""
 
@@ -55,6 +55,42 @@ def input_box(screen):
 
 def save_score(score, screen):
     with open("../score.txt", "a") as f:
-        f.write(',' + input_box(screen) + ',' + str(score))
+        f.write(input_box(screen) + ' ' + str(score) + ',')
         f.close()
-        
+
+
+# store the scores in a dictionary of 10
+def get_scores():
+    if not os.path.exists("../score.txt"):
+        with open("../score.txt", "w") as f:
+            f.close()
+    with open("../score.txt", "r") as f:
+        scores_str = f.read()
+        scores_dict = {}
+        scores_strings = scores_str.split(',')
+        for string in scores_strings:
+            if string != '':
+                name, score = string.split(' ')
+                scores_dict[name] = int(score)
+        sorted_dict = dict(sorted(scores_dict.items(), key=lambda item: item[1], reverse=True))
+        trimmed_dict = {k: v for k, v in list(sorted_dict.items())[:10]}
+        f.close()
+        return trimmed_dict
+
+def display_scores(screen, scores):
+    font = pygame.font.Font(None, 25)
+    screen.fill((0, 76, 153))
+    high_scores_text = font.render('(press any key to quit)', True, (255, 255, 255))
+    screen.blit(high_scores_text, (screen.get_width() / 2 - high_scores_text.get_width() / 2, screen.get_height() / 4))
+    for i, (name, score) in enumerate(scores.items()):
+        score_text = font.render(str(i + 1) + '. ' + name + ': ' + str(score), True, (255, 255, 255))
+        screen.blit(score_text, (screen.get_width() / 2 - score_text.get_width() / 2, screen.get_height() / 4 + 50 + i * 30))
+    pygame.display.flip()
+    waiting = True
+    while waiting:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            elif event.type == pygame.KEYDOWN:
+                waiting = False

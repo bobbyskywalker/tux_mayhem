@@ -11,16 +11,12 @@ from equipment import Equipment
 from shop import Shop
 from enemies import *
 import time
+import menu
 
+# potential updates:
 # TODO: enemies not colliding with each other would be nice
 # TODO: enemies not spawning on tux
-# TODO: main menu with high score display
-def run_game():
-    pygame.init()
-
-    game_settings = Settings()
-    screen = pygame.display.set_mode((game_settings.screen_width, game_settings.screen_height))
-    pygame.display.set_caption("TUX MAYHEM")
+def game(game_settings, screen):
     # object setup
     bullets = Group()
     crosshair = sm.Cursor(screen)
@@ -69,4 +65,15 @@ def run_game():
             gf.game_over(screen)
             break
     gf.game_won(screen, hud)
-run_game()
+
+
+def main():
+    pygame.init()
+    pygame.display.set_caption("TUX MAYHEM")
+    game_settings = Settings()
+    screen = pygame.display.set_mode((game_settings.screen_width, game_settings.screen_height))
+    menu.menu_box(screen)
+    game(game_settings, screen)
+    pygame.quit()
+
+main()
