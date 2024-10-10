@@ -9,7 +9,6 @@ def menu_box(screen):
 
     color_active = pygame.Color("red")
     color_passive = pygame.Color(96, 96, 96)
-    color = color_passive
 
     active_play = False
     active_high_scores = False
@@ -72,8 +71,8 @@ def menu_box(screen):
         hs_surface = base_font.render('     High Scores', True, (255, 255, 255))
         quit_surface = base_font.render('          Quit', True, (255, 255, 255))
 
-        screen.blit(title_surface, (screen.get_width() / 2 - title_surface.get_width() / 2 + 40, screen.get_height() / 10))
-        screen.blit(version_surface, (screen.get_width() / 2 - version_surface.get_width() / 2 + 40, screen.get_height() / 10 + 50))
+        screen.blit(title_surface, (screen.get_width() / 2 - title_surface.get_width() / 2 + 22, screen.get_height() / 10))
+        screen.blit(version_surface, (screen.get_width() / 2 - version_surface.get_width() / 2 + 22, screen.get_height() / 10 + 50))
         screen.blit(play_surface, (rect_play.x + 5, rect_play.y + 5))
         screen.blit(hs_surface, (rect_high_scores.x + 5, rect_high_scores.y + 5))
         screen.blit(quit_surface, (rect_quit.x + 5, rect_quit.y + 5))

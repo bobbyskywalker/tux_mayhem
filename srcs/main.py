@@ -15,7 +15,7 @@ import menu
 
 # potential updates:
 # TODO: enemies not colliding with each other would be nice
-# TODO: enemies not spawning on tux
+
 def game(game_settings, screen):
     # object setup
     bullets = Group()
@@ -28,6 +28,9 @@ def game(game_settings, screen):
     demons = pygame.sprite.Group()
     boss = Boss_foe(screen, tux, bullets, eq, game_settings)
     shop = Shop(screen, hud, eq, tux)
+
+    clock = pygame.time.Clock()
+    framerate = 60
 
     # first init
     gf.update_screen(game_settings, screen, tux, bullets, crosshair, hud, eq, viruses, skulls, demons, boss)
@@ -64,6 +67,8 @@ def game(game_settings, screen):
         if eq.health <= 0:
             gf.game_over(screen)
             break
+
+        clock.tick(framerate)
     gf.game_won(screen, hud)
 
 

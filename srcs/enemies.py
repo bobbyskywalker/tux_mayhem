@@ -57,7 +57,7 @@ class Skull_foe(Enemy):
         self.og_image = pygame.image.load("../graphics/skull.bmp")
         self.image = pygame.transform.scale(self.og_image, (50, 50))
         self.rect = self.image.get_rect()
-        self.speed = 2
+        self.speed = 5
         self.health = 40
         self.hit_delay = 2000
         self.last_hit = 0
@@ -68,7 +68,7 @@ class Virus_foe(Enemy):
         self.og_image = pygame.image.load("../graphics/viurs.bmp")
         self.image = pygame.transform.scale(self.og_image, (100, 50))
         self.rect = self.image.get_rect()
-        self.speed = 1
+        self.speed = 3
         self.health = 100
         self.hit_delay = 2000
         self.last_hit = 0
@@ -79,7 +79,7 @@ class Demon_foe(Enemy):
         self.og_image = pygame.image.load("../graphics/demon.bmp")
         self.image = pygame.transform.scale(self.og_image, (100, 50))
         self.rect = self.image.get_rect()
-        self.speed = 1
+        self.speed = 3
         self.health = 200
         self.hit_delay = 2000
         self.shoot_delay = 500
@@ -106,7 +106,7 @@ class Boss_foe(Demon_foe):
         self.rect = self.image.get_rect()
         self.rect.x = 50
         self.rect.y = 100
-        self.speed = 1
+        self.speed = 4
         self.health = 2000
         self.hit_delay = 2000
         self.shoot_delay = 200
@@ -170,18 +170,42 @@ def spawn_foes(viruses, skulls, demons, screen, tux, bullets, eq, hud, settings,
             num_skull = 3
             num_demons = 3
 
+    safe_zone_x = screen.get_width() * 0.4
+    safe_zone_y = screen.get_height() * 0.4
+    safe_zone_width = screen.get_width() * 0.2
+    safe_zone_height = screen.get_height() * 0.2
+
     for _ in range(num_virus):
         virus = Virus_foe(screen, tux, bullets, eq)
-        virus.rect.x = randint(0, screen.get_width() - virus.rect.width)
-        virus.rect.y = randint(0, screen.get_height() - virus.rect.height)
+        while True:
+            virus.rect.x = randint(0, screen.get_width() - virus.rect.width)
+            virus.rect.y = randint(0, screen.get_height() - virus.rect.height)
+            if (virus.rect.x < safe_zone_x or
+                virus.rect.x > safe_zone_x + safe_zone_width or
+                virus.rect.y < safe_zone_y or
+                virus.rect.y > safe_zone_y + safe_zone_height):
+                break
         viruses.add(virus)
     for _ in range(num_skull):
         skull = Skull_foe(screen, tux, bullets, eq)
-        skull.rect.x = randint(0, screen.get_width() - skull.rect.width)
-        skull.rect.y = randint(0, screen.get_height() - skull.rect.height)
+        while True:
+            skull.rect.x = randint(0, screen.get_width() - skull.rect.width)
+            skull.rect.y = randint(0, screen.get_height() - skull.rect.height)
+            if (skull.rect.x < safe_zone_x or
+                skull.rect.x > safe_zone_x + safe_zone_width or
+                skull.rect.y < safe_zone_y or
+                skull.rect.y > safe_zone_y + safe_zone_height):
+                break
         skulls.add(skull)
+
     for _ in range(num_demons):
         demon = Demon_foe(screen, tux, bullets, eq, settings)
-        demon.rect.x = randint(0, screen.get_width() - demon.rect.width)
-        demon.rect.y = randint(0, screen.get_height() - demon.rect.height)
+        while True:
+            demon.rect.x = randint(0, screen.get_width() - demon.rect.width)
+            demon.rect.y = randint(0, screen.get_height() - demon.rect.height)
+            if (demon.rect.x < safe_zone_x or
+                demon.rect.x > safe_zone_x + safe_zone_width or
+                demon.rect.y < safe_zone_y or
+                demon.rect.y > safe_zone_y + safe_zone_height):
+                break
         demons.add(demon)
