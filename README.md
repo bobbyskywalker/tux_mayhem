@@ -5,8 +5,6 @@ My first game in pygame. A simple shooter game featuring Linux mascot Tux.
 
 
 ## Demo
-
-Insert gif or link to demo
 ![Main Menu](https://github.com/bobbyskywalker/tux_mayhem/blob/master/demo/demo1.gif?raw=true)
 ![Gameplay](https://github.com/bobbyskywalker/tux_mayhem/blob/master/demo/demo4.gif?raw=true)
 ![Shop](https://github.com/bobbyskywalker/tux_mayhem/blob/master/demo/demo3.gif?raw=true)
@@ -43,8 +41,9 @@ Install pygame
     pip install pygame
     
 
-Start game (if you used venv installing pygame, use venv here too)
+Start game (if you were using venv, use it here too)
+
+```
     cd srcs
     python3 main.py
-    
 
