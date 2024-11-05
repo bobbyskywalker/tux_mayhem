@@ -64,12 +64,13 @@ def check_events(settings, screen, tux, bullets, angle, eq):
 
 
 def update_foes(viruses, skulls, demons, hud, current_time, boss):
+    all_enemies = list(viruses) + list(skulls) + list(demons)
     # update viruses
     for virus in viruses.sprites():
         virus.take_damage()
         if current_time - virus.last_hit > virus.hit_delay:
             virus.give_damage()
-        virus.pursue_player()
+        virus.pursue_player(all_enemies)
         if virus.health > 0:
             virus.blit_foe()
         else:
@@ -81,7 +82,7 @@ def update_foes(viruses, skulls, demons, hud, current_time, boss):
         skull.take_damage()
         if current_time - skull.last_hit > skull.hit_delay:
             skull.give_damage()
-        skull.pursue_player()
+        skull.pursue_player(all_enemies)
         if skull.health > 0:
             skull.blit_foe()
         else:
@@ -98,7 +99,7 @@ def update_foes(viruses, skulls, demons, hud, current_time, boss):
             demon.last_shot = pygame.time.get_ticks()
         if current_time - demon.last_hit > demon.hit_delay:
             demon.give_damage()
-        demon.pursue_player()
+        demon.pursue_player(all_enemies)
         if demon.health > 0:
             demon.blit_foe()
         else:
@@ -119,7 +120,7 @@ def update_foes(viruses, skulls, demons, hud, current_time, boss):
             boss.last_shot = pygame.time.get_ticks()
         if current_time - boss.last_hit > boss.hit_delay:
             boss.give_damage()
-        boss.pursue_player()
+        boss.pursue_player(all_enemies)
         if boss.health > 0:
             boss.blit_foe()
         else:
@@ -156,7 +157,7 @@ def update_screen(
             eq.ammo_icon.get_width(), screen.get_width() - eq.ammo_icon.get_width()
         )
         eq.ammo_spoty = randint(
-            20 + hud.gun_img.get_height(),
+            60 + hud.gun_img.get_height(),
             screen.get_height() - eq.ammo_icon.get_height(),
         )
     cords = (eq.ammo_spotx, eq.ammo_spoty)

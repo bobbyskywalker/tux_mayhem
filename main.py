@@ -14,9 +14,6 @@ from srcs.shop import Shop
 from srcs.enemies import *
 from srcs.menu import menu_box
 
-# potential updates:
-# TODO: enemies not colliding with each other would be nice
-
 def game(game_settings, screen):
     # object setup
     bullets = Group()
@@ -60,7 +57,6 @@ def game(game_settings, screen):
             gf.print_wave_info(screen, hud)
             time.sleep(3)
             
-
         angle = sm.get_angle_between((tux.rect.centerx, tux.rect.centery), crosshair.cursor_img_rect)
         gf.check_events(game_settings, screen, tux, bullets, angle, eq)        
         tux.update_pos()
@@ -69,7 +65,6 @@ def game(game_settings, screen):
         if eq.health <= 0:
             gf.game_over(screen)
             break
-
         clock.tick(framerate)
     gf.game_won(screen, hud)
 

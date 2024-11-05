@@ -13,7 +13,7 @@ def input_box(screen):
     )
 
     color_active = pygame.Color("lightskyblue3")
-    color_passive = pygame.Color("blue")
+    color_passive = pygame.Color("black")
     color = color_passive
 
     active = False

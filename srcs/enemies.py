@@ -40,13 +40,39 @@ class Enemy(Sprite):
         )
         self.screen.blit(self.image, self.rect)
 
-    def pursue_player(self):
+    # collision handled with 'repulsion force', shit took me too much time :DD
+    def pursue_player(self, all_enemies):
         dx, dy = self.tux.rect.x - self.rect.x, self.tux.rect.y - self.rect.y
         dst = math.hypot(dx, dy)
+
         if dst > 0:
             dx, dy = dx / dst, dy / dst
-            self.rect.centerx += dx * self.speed
-            self.rect.centery += dy * self.speed
+
+        move_x, move_y = dx * self.speed, dy * self.speed
+
+        min_distance = 50
+        repulsion_strength = 1.5
+
+        for enemy in all_enemies:
+            if enemy != self:
+                distance = math.hypot(
+                    enemy.rect.centerx - self.rect.centerx,
+                    enemy.rect.centery - self.rect.centery,
+                )
+                if distance < min_distance:
+                    # Calculate the repulsion force direction (push away from the other enemy)
+                    repulse_dx = self.rect.centerx - enemy.rect.centerx
+                    repulse_dy = self.rect.centery - enemy.rect.centery
+                    repulse_dist = math.hypot(repulse_dx, repulse_dy)
+
+                    if repulse_dist > 0:
+                        repulse_dx /= repulse_dist
+                        repulse_dy /= repulse_dist
+                        move_x += repulse_dx * repulsion_strength
+                        move_y += repulse_dy * repulsion_strength
+
+        self.rect.centerx += int(move_x)
+        self.rect.centery += int(move_y)
 
     def take_damage(self):
         for bullet in self.bullets.sprites():
@@ -185,16 +211,16 @@ def spawn_foes(viruses, skulls, demons, screen, tux, bullets, eq, hud, settings,
             num_skull = 3
             num_demons = 3
 
-    safe_zone_x = screen.get_width() * 0.8
-    safe_zone_y = screen.get_height() * 0.8
-    safe_zone_width = screen.get_width() * 0.8
-    safe_zone_height = screen.get_height() * 0.8
+    safe_zone_x = screen.get_width() * 0.3
+    safe_zone_y = screen.get_height() * 0.3
+    safe_zone_width = screen.get_width() * 0.5
+    safe_zone_height = screen.get_height() * 0.5
 
     for _ in range(num_virus):
         virus = Virus_foe(screen, tux, bullets, eq)
         while True:
             virus.rect.x = randint(0, screen.get_width() - virus.rect.width)
-            virus.rect.y = randint(0, screen.get_height() - virus.rect.height)
+            virus.rect.y = randint(100, screen.get_height() - virus.rect.height)
             if (
                 virus.rect.x < safe_zone_x
                 or virus.rect.x > safe_zone_x + safe_zone_width
@@ -202,12 +228,12 @@ def spawn_foes(viruses, skulls, demons, screen, tux, bullets, eq, hud, settings,
                 or virus.rect.y > safe_zone_y + safe_zone_height
             ):
                 break
-        viruses.add(virus)
+        viruses.add(virus)  
     for _ in range(num_skull):
         skull = Skull_foe(screen, tux, bullets, eq)
         while True:
             skull.rect.x = randint(0, screen.get_width() - skull.rect.width)
-            skull.rect.y = randint(0, screen.get_height() - skull.rect.height)
+            skull.rect.y = randint(100, screen.get_height() - skull.rect.height)
             if (
                 skull.rect.x < safe_zone_x
                 or skull.rect.x > safe_zone_x + safe_zone_width
@@ -221,7 +247,7 @@ def spawn_foes(viruses, skulls, demons, screen, tux, bullets, eq, hud, settings,
         demon = Demon_foe(screen, tux, bullets, eq, settings)
         while True:
             demon.rect.x = randint(0, screen.get_width() - demon.rect.width)
-            demon.rect.y = randint(0, screen.get_height() - demon.rect.height)
+            demon.rect.y = randint(100, screen.get_height() - demon.rect.height)
             if (
                 demon.rect.x < safe_zone_x
                 or demon.rect.x > safe_zone_x + safe_zone_width
