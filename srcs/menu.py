@@ -32,7 +32,7 @@ def menu_box(screen):
     base_font = pygame.font.Font(None, 60)
     title_surface = base_font.render("TUX MAYHEM", True, (255, 255, 255))
     base_font = pygame.font.Font(None, 24)
-    version_surface = base_font.render("v0.99", True, (255, 255, 255))
+    version_surface = base_font.render("v1.0", True, (255, 255, 255))
     base_font = pygame.font.Font(None, 32)
     play_surface = base_font.render("Play", True, (255, 255, 255))
     hs_surface = base_font.render("High Scores", True, (255, 255, 255))

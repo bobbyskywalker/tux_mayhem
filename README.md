@@ -1,4 +1,5 @@
 
+
 # TUX MAYHEM
 
 My first game in pygame. A simple shooter game featuring Linux mascot Tux.
@@ -11,7 +12,7 @@ My first game in pygame. A simple shooter game featuring Linux mascot Tux.
 
 ## Features
 
-- 4 types of enemies
+- Various types of enemies
 - 2 weapons
 - High score saving and display system
 - In-game shop
@@ -24,26 +25,13 @@ Clone the project
 ```bash
   git clone https://github.com/bobbyskywalker/tux_mayhem
 ```
-
-Go to the project directory
+If it's your first time (while in the project root directory):
 ```
-Install pygame
-
+cd config
+./venv_setup
 ```
-    pip install pygame 
-    OR
-    pip3 install pygame
-
-    If this doesn't work, try using virtual environment:
-
-    python3 -m venv myenv
-    source/myenv/activate
-    pip install pygame
-    
-
-Start game (if you were using venv, use it here too)
-
+Play:
 ```
-    cd srcs
-    python3 main.py
+./tux_mayhem
+
 
