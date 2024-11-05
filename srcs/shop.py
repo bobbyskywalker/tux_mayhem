@@ -1,5 +1,7 @@
-import pygame
 import sys
+
+import pygame
+
 class Shop():
     def __init__(self, screen, hud, eq, tux):
         self.tux = tux

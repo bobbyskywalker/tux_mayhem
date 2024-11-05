@@ -1,8 +1,11 @@
-import pygame
 import math
 from random import randint
+
+import pygame
 from pygame.sprite import Sprite
-from bullet import Demon_Bullet
+
+from srcs.bullet import Demon_Bullet
+
 
 # generic motherclass
 class Enemy(Sprite):
@@ -19,7 +22,7 @@ class Enemy(Sprite):
         self.bullets = bullets
 
         self.health = 100
-        
+
         self.eq = eq
 
         self.hit_delay = 2000
@@ -27,8 +30,14 @@ class Enemy(Sprite):
 
     def blit_foe(self):
         font = pygame.font.Font(None, self.image.get_height() // 2)
-        health_str = font.render(str(self.health), True, (255, 0, 0)) 
-        self.screen.blit(health_str, (self.rect.centerx - health_str.get_width() / 2, self.rect.top - health_str.get_height()))
+        health_str = font.render(str(self.health), True, (255, 0, 0))
+        self.screen.blit(
+            health_str,
+            (
+                self.rect.centerx - health_str.get_width() / 2,
+                self.rect.top - health_str.get_height(),
+            ),
+        )
         self.screen.blit(self.image, self.rect)
 
     def pursue_player(self):
@@ -37,13 +46,13 @@ class Enemy(Sprite):
         if dst > 0:
             dx, dy = dx / dst, dy / dst
             self.rect.centerx += dx * self.speed
-            self.rect.centery += dy  * self.speed
+            self.rect.centery += dy * self.speed
 
     def take_damage(self):
         for bullet in self.bullets.sprites():
             if self.rect.colliderect(bullet.rect):
-                    self.health -= 20
-                    self.bullets.remove(bullet)
+                self.health -= 20
+                self.bullets.remove(bullet)
 
     def give_damage(self):
         current_time = pygame.time.get_ticks()
@@ -51,21 +60,23 @@ class Enemy(Sprite):
             self.eq.health -= 5
             self.last_hit = current_time
 
+
 class Skull_foe(Enemy):
     def __init__(self, screen, tux, bullets, eq):
         super().__init__(screen, tux, bullets, eq)
-        self.og_image = pygame.image.load("../graphics/skull.bmp")
+        self.og_image = pygame.image.load("graphics/skull.bmp")
         self.image = pygame.transform.scale(self.og_image, (50, 50))
         self.rect = self.image.get_rect()
-        self.speed = 5
+        self.speed = 4
         self.health = 40
         self.hit_delay = 2000
         self.last_hit = 0
 
+
 class Virus_foe(Enemy):
     def __init__(self, screen, tux, bullets, eq):
         super().__init__(screen, tux, bullets, eq)
-        self.og_image = pygame.image.load("../graphics/viurs.bmp")
+        self.og_image = pygame.image.load("graphics/viurs.bmp")
         self.image = pygame.transform.scale(self.og_image, (100, 50))
         self.rect = self.image.get_rect()
         self.speed = 3
@@ -73,10 +84,11 @@ class Virus_foe(Enemy):
         self.hit_delay = 2000
         self.last_hit = 0
 
+
 class Demon_foe(Enemy):
     def __init__(self, screen, tux, bullets, eq, settings):
         super().__init__(screen, tux, bullets, eq)
-        self.og_image = pygame.image.load("../graphics/demon.bmp")
+        self.og_image = pygame.image.load("graphics/demon.bmp")
         self.image = pygame.transform.scale(self.og_image, (100, 50))
         self.rect = self.image.get_rect()
         self.speed = 3
@@ -98,10 +110,11 @@ class Demon_foe(Enemy):
                 self.eq.health -= 5
                 self.demon_bullets.remove(bullet)
 
+
 class Boss_foe(Demon_foe):
     def __init__(self, screen, tux, bullets, eq, settings):
         super().__init__(screen, tux, bullets, eq, settings)
-        self.og_image = pygame.image.load("../graphics/bear_boss.bmp")
+        self.og_image = pygame.image.load("graphics/bear_boss.bmp")
         self.image = pygame.transform.scale(self.og_image, (150, 125))
         self.rect = self.image.get_rect()
         self.rect.x = 50
@@ -121,11 +134,13 @@ class Boss_foe(Demon_foe):
     def shoot(self):
         bullet = Demon_Bullet(self.settings, self.screen, self.tux, self)
         self.demon_bullets.add(bullet)
+
     def take_bullet_damage(self):
         for bullet in self.demon_bullets.sprites():
             if bullet.rect.colliderect(self.tux.rect):
                 self.eq.health -= 5
                 self.demon_bullets.remove(bullet)
+
 
 def spawn_foes(viruses, skulls, demons, screen, tux, bullets, eq, hud, settings, boss):
     match hud.wave:
@@ -170,20 +185,22 @@ def spawn_foes(viruses, skulls, demons, screen, tux, bullets, eq, hud, settings,
             num_skull = 3
             num_demons = 3
 
-    safe_zone_x = screen.get_width() * 0.4
-    safe_zone_y = screen.get_height() * 0.4
-    safe_zone_width = screen.get_width() * 0.2
-    safe_zone_height = screen.get_height() * 0.2
+    safe_zone_x = screen.get_width() * 0.8
+    safe_zone_y = screen.get_height() * 0.8
+    safe_zone_width = screen.get_width() * 0.8
+    safe_zone_height = screen.get_height() * 0.8
 
     for _ in range(num_virus):
         virus = Virus_foe(screen, tux, bullets, eq)
         while True:
             virus.rect.x = randint(0, screen.get_width() - virus.rect.width)
             virus.rect.y = randint(0, screen.get_height() - virus.rect.height)
-            if (virus.rect.x < safe_zone_x or
-                virus.rect.x > safe_zone_x + safe_zone_width or
-                virus.rect.y < safe_zone_y or
-                virus.rect.y > safe_zone_y + safe_zone_height):
+            if (
+                virus.rect.x < safe_zone_x
+                or virus.rect.x > safe_zone_x + safe_zone_width
+                or virus.rect.y < safe_zone_y
+                or virus.rect.y > safe_zone_y + safe_zone_height
+            ):
                 break
         viruses.add(virus)
     for _ in range(num_skull):
@@ -191,10 +208,12 @@ def spawn_foes(viruses, skulls, demons, screen, tux, bullets, eq, hud, settings,
         while True:
             skull.rect.x = randint(0, screen.get_width() - skull.rect.width)
             skull.rect.y = randint(0, screen.get_height() - skull.rect.height)
-            if (skull.rect.x < safe_zone_x or
-                skull.rect.x > safe_zone_x + safe_zone_width or
-                skull.rect.y < safe_zone_y or
-                skull.rect.y > safe_zone_y + safe_zone_height):
+            if (
+                skull.rect.x < safe_zone_x
+                or skull.rect.x > safe_zone_x + safe_zone_width
+                or skull.rect.y < safe_zone_y
+                or skull.rect.y > safe_zone_y + safe_zone_height
+            ):
                 break
         skulls.add(skull)
 
@@ -203,9 +222,11 @@ def spawn_foes(viruses, skulls, demons, screen, tux, bullets, eq, hud, settings,
         while True:
             demon.rect.x = randint(0, screen.get_width() - demon.rect.width)
             demon.rect.y = randint(0, screen.get_height() - demon.rect.height)
-            if (demon.rect.x < safe_zone_x or
-                demon.rect.x > safe_zone_x + safe_zone_width or
-                demon.rect.y < safe_zone_y or
-                demon.rect.y > safe_zone_y + safe_zone_height):
+            if (
+                demon.rect.x < safe_zone_x
+                or demon.rect.x > safe_zone_x + safe_zone_width
+                or demon.rect.y < safe_zone_y
+                or demon.rect.y > safe_zone_y + safe_zone_height
+            ):
                 break
         demons.add(demon)

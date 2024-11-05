@@ -1,7 +1,10 @@
+from math import cos, sin
+
 import pygame
 from pygame.sprite import Sprite
-from math import cos, hypot, sin
-import shooting_mechanics as sm
+
+import srcs.shooting_mechanics as sm
+
 
 class Bullet(Sprite):
     def __init__(self, settings, screen, tux, angle):
@@ -42,7 +45,9 @@ class Demon_Bullet(Sprite):
         self.demon = demon
         self.screen = screen
         self.settings = settings
-        self.rect = pygame.Rect(0, 0, self.settings.demon_bullet_width, self.settings.demon_bullet_height)
+        self.rect = pygame.Rect(
+            0, 0, self.settings.demon_bullet_width, self.settings.demon_bullet_height
+        )
         self.rect.top = demon.rect.top
         self.rect.bottom = demon.rect.bottom
         self.rect.left = demon.rect.left
@@ -61,10 +66,12 @@ class Demon_Bullet(Sprite):
         self.y -= sin(self.angle) * self.settings.demon_bullet_speed_factor
         self.rect.x = self.x
         self.rect.y = self.y
-    
+
     def draw_bullet(self):
         pygame.draw.rect(self.screen, self.color, self.rect)
 
+
+# appliable for both types of bullets
 def delete_bullets(bullets, HUD):
     for bullet in bullets.copy():
         if (bullet.rect.top) <= HUD.gun_img.get_height() + 5:

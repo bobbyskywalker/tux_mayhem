@@ -1,11 +1,20 @@
-import pygame
 import sys
-import settings
-import scores as scr
+
+import pygame
+
+import srcs.scores as scr
+
+
 def menu_box(screen):
-    rect_play = pygame.Rect(screen.get_width() / 2 - 75, screen.get_height() / 4, 200, 50)
-    rect_high_scores = pygame.Rect(screen.get_width() / 2 - 75, screen.get_height() / 4 * 2, 200, 50)
-    rect_quit = pygame.Rect(screen.get_width() / 2 - 75, screen.get_height() / 4 * 3, 200, 50)
+    rect_play = pygame.Rect(
+        screen.get_width() / 2 - 75, screen.get_height() / 4, 200, 50
+    )
+    rect_high_scores = pygame.Rect(
+        screen.get_width() / 2 - 75, screen.get_height() / 4 * 2, 200, 50
+    )
+    rect_quit = pygame.Rect(
+        screen.get_width() / 2 - 75, screen.get_height() / 4 * 3, 200, 50
+    )
 
     color_active = pygame.Color("red")
     color_passive = pygame.Color(96, 96, 96)
@@ -24,10 +33,10 @@ def menu_box(screen):
                 if active_play:
                     return 1
                 if active_high_scores:
-                   display = True
-                   while display:
-                    scores = scr.get_scores()
-                    display = scr.display_scores(screen, scores)
+                    display = True
+                    while display:
+                        scores = scr.get_scores()
+                        display = scr.display_scores(screen, scores)
                 if active_quit:
                     pygame.quit()
                     sys.exit()
@@ -45,7 +54,7 @@ def menu_box(screen):
                 else:
                     active_quit = False
 
-        screen.fill(('lightskyblue3'))
+        screen.fill(("lightskyblue3"))
 
         if active_play:
             pygame.draw.rect(screen, color_active, rect_play)
@@ -63,16 +72,28 @@ def menu_box(screen):
             pygame.draw.rect(screen, color_passive, rect_quit)
 
         base_font = pygame.font.Font(None, 60)
-        title_surface = base_font.render('TUX MAYHEM', True, (255, 255, 255))
+        title_surface = base_font.render("TUX MAYHEM", True, (255, 255, 255))
         base_font = pygame.font.Font(None, 24)
-        version_surface = base_font.render('v0.99', True, (255, 255, 255))
+        version_surface = base_font.render("v0.99", True, (255, 255, 255))
         base_font = pygame.font.Font(None, 32)
-        play_surface = base_font.render('           Play', True, (255, 255, 255))
-        hs_surface = base_font.render('     High Scores', True, (255, 255, 255))
-        quit_surface = base_font.render('          Quit', True, (255, 255, 255))
+        play_surface = base_font.render("           Play", True, (255, 255, 255))
+        hs_surface = base_font.render("     High Scores", True, (255, 255, 255))
+        quit_surface = base_font.render("          Quit", True, (255, 255, 255))
 
-        screen.blit(title_surface, (screen.get_width() / 2 - title_surface.get_width() / 2 + 22, screen.get_height() / 10))
-        screen.blit(version_surface, (screen.get_width() / 2 - version_surface.get_width() / 2 + 22, screen.get_height() / 10 + 50))
+        screen.blit(
+            title_surface,
+            (
+                screen.get_width() / 2 - title_surface.get_width() / 2 + 22,
+                screen.get_height() / 10,
+            ),
+        )
+        screen.blit(
+            version_surface,
+            (
+                screen.get_width() / 2 - version_surface.get_width() / 2 + 22,
+                screen.get_height() / 10 + 50,
+            ),
+        )
         screen.blit(play_surface, (rect_play.x + 5, rect_play.y + 5))
         screen.blit(hs_surface, (rect_high_scores.x + 5, rect_high_scores.y + 5))
         screen.blit(quit_surface, (rect_quit.x + 5, rect_quit.y + 5))
