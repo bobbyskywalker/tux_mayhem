@@ -3,16 +3,16 @@ import time
 import pygame
 from pygame.sprite import Group
 
-import srcs.game_functions as gf
-import srcs.shooting_mechanics as sm
-from srcs.settings import Settings
-from srcs.tux import Tux
-from srcs.bullet import delete_bullets
-from srcs.HUD import HUD
-from srcs.equipment import Equipment
-from srcs.shop import Shop
-from srcs.enemies import *
-from srcs.menu import menu_box
+import game_functions as gf
+import shooting_mechanics as sm
+from settings import Settings
+from tux import Tux
+from bullet import delete_bullets
+from HUD import HUD
+from equipment import Equipment
+from shop import Shop
+from enemies import *
+from menu import menu_box
 
 def game(game_settings, screen):
     # object setup

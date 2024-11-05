@@ -10,7 +10,7 @@ class Equipment:
         self.health = 100
         self.current_weapon = "GUN"
         self.ammo_gathered = False
-        self.ammo_icon_og = pygame.image.load("graphics/ammo.bmp")
+        self.ammo_icon_og = pygame.image.load("../graphics/ammo.bmp")
         self.ammo_icon = pygame.transform.scale(self.ammo_icon_og, (30, 30))
         self.ammo_rect = self.ammo_icon.get_rect()
 

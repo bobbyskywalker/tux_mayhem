@@ -1,12 +1,12 @@
 import pygame
 
-from srcs.HUD import HUD
+from HUD import HUD
 
 
 class Tux:
     def __init__(self, screen, HUD, eq, settings):
         self.screen = screen
-        self.og_image = pygame.image.load("graphics/tux.bmp")
+        self.og_image = pygame.image.load("../graphics/tux.bmp")
         self.image = pygame.transform.scale(self.og_image, (60, 60))
 
         self.rect = self.image.get_rect()

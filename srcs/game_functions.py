@@ -3,9 +3,9 @@ from random import randint
 
 import pygame
 
-from srcs.bullet import Bullet, delete_bullets
-from srcs.enemies import *
-import srcs.scores as scr
+from bullet import Bullet, delete_bullets
+from enemies import *
+import scores as scr
 
 
 def check_keyup(event, tux):

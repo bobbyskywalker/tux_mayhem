@@ -1,6 +1,6 @@
 import pygame
 
-from srcs.equipment import Equipment
+from equipment import Equipment
 
 
 class HUD:
@@ -8,9 +8,9 @@ class HUD:
         self.screen = screen
         self.settings = settings
         self.equipment = equipment
-        self.gun_icon = pygame.image.load("graphics/gun.bmp")
-        self.rifle_icon = pygame.image.load("graphics/rifle.bmp")
-        self.health_icon = pygame.image.load("graphics/health.bmp")
+        self.gun_icon = pygame.image.load("../graphics/gun.bmp")
+        self.rifle_icon = pygame.image.load("../graphics/rifle.bmp")
+        self.health_icon = pygame.image.load("../graphics/health.bmp")
         self.score = 0
         self.rifle_img = pygame.transform.scale(self.rifle_icon, (100, 40))
         self.gun_img = pygame.transform.scale(self.gun_icon, (60, 40))

@@ -4,7 +4,7 @@ from random import randint
 import pygame
 from pygame.sprite import Sprite
 
-from srcs.bullet import Demon_Bullet
+from bullet import Demon_Bullet
 
 
 # generic motherclass
@@ -90,7 +90,7 @@ class Enemy(Sprite):
 class Skull_foe(Enemy):
     def __init__(self, screen, tux, bullets, eq):
         super().__init__(screen, tux, bullets, eq)
-        self.og_image = pygame.image.load("graphics/skull.bmp")
+        self.og_image = pygame.image.load("../graphics/skull.bmp")
         self.image = pygame.transform.scale(self.og_image, (50, 50))
         self.rect = self.image.get_rect()
         self.speed = 4
@@ -102,7 +102,7 @@ class Skull_foe(Enemy):
 class Virus_foe(Enemy):
     def __init__(self, screen, tux, bullets, eq):
         super().__init__(screen, tux, bullets, eq)
-        self.og_image = pygame.image.load("graphics/viurs.bmp")
+        self.og_image = pygame.image.load("../graphics/viurs.bmp")
         self.image = pygame.transform.scale(self.og_image, (100, 50))
         self.rect = self.image.get_rect()
         self.speed = 3
@@ -114,7 +114,7 @@ class Virus_foe(Enemy):
 class Demon_foe(Enemy):
     def __init__(self, screen, tux, bullets, eq, settings):
         super().__init__(screen, tux, bullets, eq)
-        self.og_image = pygame.image.load("graphics/demon.bmp")
+        self.og_image = pygame.image.load("../graphics/demon.bmp")
         self.image = pygame.transform.scale(self.og_image, (100, 50))
         self.rect = self.image.get_rect()
         self.speed = 3
@@ -140,7 +140,7 @@ class Demon_foe(Enemy):
 class Boss_foe(Demon_foe):
     def __init__(self, screen, tux, bullets, eq, settings):
         super().__init__(screen, tux, bullets, eq, settings)
-        self.og_image = pygame.image.load("graphics/bear_boss.bmp")
+        self.og_image = pygame.image.load("../graphics/bear_boss.bmp")
         self.image = pygame.transform.scale(self.og_image, (150, 125))
         self.rect = self.image.get_rect()
         self.rect.x = 50

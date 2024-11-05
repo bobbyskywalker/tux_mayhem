@@ -3,7 +3,7 @@ from math import cos, sin
 import pygame
 from pygame.sprite import Sprite
 
-import srcs.shooting_mechanics as sm
+import shooting_mechanics as sm
 
 
 class Bullet(Sprite):

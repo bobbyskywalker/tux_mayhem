@@ -2,7 +2,7 @@ import sys
 
 import pygame
 
-import srcs.scores as scr
+import scores as scr
 
 
 def options(screen):

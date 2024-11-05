@@ -5,7 +5,7 @@ import pygame
 
 class Cursor:
     def __init__(self, screen):
-        self.cursor_img_og = pygame.image.load("graphics/crosshair.bmp")
+        self.cursor_img_og = pygame.image.load("../graphics/crosshair.bmp")
         self.cursor_img = pygame.transform.scale(self.cursor_img_og, (20, 20))
         self.cursor_img_rect = self.cursor_img.get_rect()
         self.cursor_img_rect.center = (screen.get_width() / 2, screen.get_height() / 2)
